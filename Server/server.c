@@ -186,7 +186,8 @@ int sendMessage(int clientSocket, int socketServer, char *inputServer) {
 }
 
 void welcomeMessage(int clientSocket, int socketServer) {
-    char *inputServer = "Connection established";
+	char inputServer[100];
+    sprintf(inputServer, "Connection established with %s:%d", PROTO_ADDRESS, PROTO_PORT);
 
     int stringLen = strlen(inputServer);
     send(clientSocket, inputServer, stringLen, 0);

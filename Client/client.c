@@ -143,16 +143,21 @@ char getOperation(char inputOperation) {
 int communication(int socketClient) {
     char operation[50], inputString[150];
     int operand1, operand2;
-    int finished = 0;
+    int finished = 0, numElements;
 
     // Until user will insert = calculator will work
     do {
-        // Read a line of input from standard input (keyboard) and store it in the inputString array and parse the inputString to extract data
-        printf("Insert an operation [es: + 23 45]: ");
-    	fgets(inputString, sizeof(inputString), stdin);
-    	sscanf(inputString, "%s %d %d", &operation, &operand1, &operand2);
-    	printf("Debug: operandi after assignment: %d\n", operand1);
-     	printf("Debug: operandi after assignment: %d\n", operand2);
+    	do {
+    	   printf("Insert an operation [e.g., + 23 45]: ");
+    	   fgets(inputString, sizeof(inputString), stdin);
+
+    	   // Scansiona l'input e controlla il numero di elementi corretti
+    	   numElements = sscanf(inputString, "%c %d %d", &operation, &operand1, &operand2);
+
+    	   if (numElements != 3) {
+    	      printf("Invalid input. Please provide an operation and two operands.\n");
+    	   }
+    	 } while (numElements != 3);
     	puts("");
 
     	// Remove newline character if present
