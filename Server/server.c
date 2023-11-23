@@ -150,8 +150,10 @@ int communication(int clientSocket, int socketServer) {
 
     MsgStruct operands = getOperands(clientSocket, socketServer);
 
+
+	// Use ntohl instead of ntohs for a 32-bit integer
     int result = performOperation(operands.a, operands.b, buf[0]);
-    result = htons(result);
+    result = htonl(result);
 
     sendResult(clientSocket, result);
     return 0;

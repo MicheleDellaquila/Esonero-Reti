@@ -129,7 +129,8 @@ char getOperation(char inputOperation) {
 
 		   default:
 			printf("Carattere errato, inserire un nuovo carattere (+ - x /): ");
-			scanf("%c", &inputString[0]);
+			fgets(inputString, sizeof(inputString), stdin);
+
 		    isOperationCorrect = 0;
 		    break;
 		};
@@ -149,7 +150,10 @@ int communication(int socketClient) {
         // Read a line of input from standard input (keyboard) and store it in the inputString array and parse the inputString to extract data
         printf("Insert an operation [es: + 23 45]: ");
     	fgets(inputString, sizeof(inputString), stdin);
-    	sscanf(inputString, "%c %d %d", &operation, &operand1, &operand2);
+    	sscanf(inputString, "%s %d %d", &operation, &operand1, &operand2);
+    	printf("Debug: operandi after assignment: %d\n", operand1);
+     	printf("Debug: operandi after assignment: %d\n", operand2);
+    	puts("");
 
     	// Remove newline character if present
     	if (operation[strlen(operation) - 1] == '\n') {
@@ -273,7 +277,10 @@ void exitProgram(int socketClient) {
 }
 
 int getResult(int clientSocket) {
-    int result = 0;
-    recv(clientSocket, &result, sizeof(result), 0);
-    return ntohs(result);
+	int result;
+
+	// Use ntohl instead of ntohs for a 32-bit integer
+	recv(clientSocket, &result, sizeof(result), 0);
+	result = ntohl(result);
+	return result;
 }

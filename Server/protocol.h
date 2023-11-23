@@ -12,7 +12,6 @@
 
 #define PROTO_ADDRESS "127.0.0.1"
 #define PROTO_PORT 27016
-#define QLEN 6
 
 typedef struct {
 	int a;
